@@ -56,11 +56,13 @@ header {
 }
 
 .button {
-    background-color: #888;
-    box-shadow: 1px 1px 1px #666;
-    border-radius: 1em;
-    padding: 0.1em 0.4em;
-    margin: 0.5em 0.2em;
+	border-radius:1em;
+	padding:0.5em 1em 0.5em 1em;
+	background-color: #88f;
+	border:1px solid #ccc;
+	box-shadow: 1px 1px 1px #666;
+	margin: 0.5em 0.2em;
+	display:inline-block;
 }
 
 .button:hover {
