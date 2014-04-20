@@ -28,7 +28,7 @@ footer {
 
 #title {
     text-align: center;
-    font-size:150%;
+    font-size:300%;
     font-weight:bold;
     font-style:italic;
     width: 100%;
@@ -47,8 +47,8 @@ footer {
 }
 
 #question {
-    font-size: 1em;
-    font-wight: bold;
+    font-size:150%;
+    font-weight: bold;
 }
 
 #picture {
