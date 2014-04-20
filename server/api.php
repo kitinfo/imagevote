@@ -22,6 +22,10 @@ function main() {
     if (isset($_GET["random"])) {
 	getRandom();
     }
+    
+    if (isset($_GET["answers"])) {
+	getAnswers();
+    }
 
     if (isset($http_raw) && !empty($http_raw)) {
 
@@ -42,11 +46,17 @@ function vote($obj) {
     
     global $controller, $out;
     
-    $sql = "INSERT INTO replies (image, answer) VALUES (:image, :answer)";
+    if ($obj["image"] != null || $obj["reply"] != null) {
+	$out->addStatus("replies", "image or reply not set!");
+    }
+    
+    
+    $sql = "INSERT INTO replies (image, reply) VALUES (:image, :reply)";
+    
     
     $stm = $controller->exec($sql, array(
-	":image" => $image,
-	":answer" => $answer
+	":image" => $obj["image"],
+	":reply" => $obj["reply"]
     ));
     
     if ($stm !== false) {
@@ -55,16 +65,27 @@ function vote($obj) {
     }
 }
 
+function getAnswers() {
+    global $controller, $out;
+    
+    $sql = "SELECT * FROM answers";
+    
+    $stm = $controller->exec($sql, array());
+    
+    if ($stm !== false) {
+	$out->addStatus("answers", $stm->errorInfo());
+	$out->add("answer", $stm->fetchall(PDO::FETCH_ASSOC));
+	$stm->closeCursor();
+    }
+}
+
 function stats($obj) {
     
     global $controller, $out;
     
-    $sql = "INSERT INTO replies (image, answer) VALUES (:image, :answer)";
+    $sql = "SELECT * FROM replies";
     
-    $stm = $controller->exec($sql, array(
-	":image" => $image,
-	":answer" => $answer
-    ));
+    $stm = $controller->exec($sql, array());
     
     if ($stm !== false) {
 	$out->addStatus("replies", $stm->errorInfo());
