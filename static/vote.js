@@ -60,6 +60,23 @@ var vote = {
     },
     setStatus: function(string) {
 	document.getElementById("status").textContent = string;
+    },
+    stats: function() {
+	ajax.asyncGet(vote.url + "?stats", function(xhr) {
+	    var stats = JSON.parse(xhr.response).stats;
+	    
+	    stats.forEach(function(val) {
+		var tr = document.createElement('tr');
+		
+		var id = document.createElement('td');
+		id.textContent = val.id;
+		tr.appendChild(id);
+		
+		
+		
+		document.getElementById('tableBody').appendChild(tr);
+	    });
+	});
     }
 };
 

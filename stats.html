@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Vote...</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="icon" href="static/favicon.ico" type="image/x-icon" />
+		<link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" type="text/css" href="static/vote.css" />
+		<meta name="description" content="Vote..." />
+		<meta name="robots" content="noindex,nofollow" />
+		<script type="text/javascript" src="static/ajax.js"></script>
+		<script type="text/javascript" src="static/vote.js"></script>
+	</head>
+	<body onload="vote.stats();">
+	    <header>
+		<div id="title"><img src="static/logo.svg" alt="logo" />Image Vote...</div>
+		<span id="status"></span>
+	    </header>
+	    <div id="content">
+		<div id="question">Stats</div>
+		<div id="picture"></div>
+		<div id="answers"></div>
+		<br />
+		<span class="button" onclick="vote.getRandomImage()">Next</span>
+		
+		
+		
+		<table>
+		    <thead>
+			<tr id="headLine">
+			    <th>ID</th>
+			    <th>Bild</th>
+			</tr>
+		    </thead>
+		    <tbody id="tableBody"></tbody>
+		</table>
+		
+		
+	    </div>
+	    <footer>
+		
+	    </footer>
+	</body>
+</html>
