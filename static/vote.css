@@ -28,12 +28,14 @@ footer {
 
 #title {
     text-align: center;
-    font-size: 2em;
-    font-weight: bold;
+    font-size:150%;
+    font-weight:bold;
+    font-style:italic;
     width: 100%;
     display: inline-block;
     position:relative;
-    color:#333;
+    border-bottom:2px solid #222;
+    color:#666;
 }
 
 
