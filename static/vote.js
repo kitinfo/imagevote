@@ -4,10 +4,22 @@
  * and open the template in the editor.
  */
 var vote = {
-    url: "http://31.172.102.146/server/api.php",
+    url: "server/api.php",
+    //url:"server/api.php",
     init: function() {
 	vote.getRandomImage();
 	vote.getAnswers();
+	
+	
+	window.addEventListener("keyup", function(event) {
+	    
+	    if (event.keyIdentifier === "Right" ) {
+		vote.vote(0);
+	    }
+	    if (event.keyIdentifier === "Left") {
+		vote.vote(1);
+	    }
+	}, false);
     },
     getRandomImage: function() {
 	ajax.asyncGet(vote.url + "?random", function(xhr) {
@@ -71,23 +83,23 @@ var vote = {
 	    
 	    var answers = JSON.parse(xhr.response).answer;
 	    
-	    var elem = document.getElementById("headLine");
-	    var elem2 = document.getElementById("tHead");
+	    //var elem = document.getElementById("headLine");
+	    //var elem2 = document.getElementById("tHead");
 	    
-	    answers.forEach(function(val) {
+	    /*answers.forEach(function(val) {
 		var th = document.createElement('th');
 		th.textContent = val.name;
 		elem.appendChild(th);
 		elem2.appendChild(th);
-	    });
+	    });*/
 	    
 	    /**
 	     * only for this
 	     */
-	    var av = document.createElement('th');
-	    av.textContent = "Durschnitt";
-	    elem.appendChild(av);
-	    elem2.appendChild(av);
+	    //var av = document.createElement('th');
+	    //av.textContent = "Durschnitt";
+	    //elem.appendChild(av);
+	    //elem2.appendChild(av);
 	    
 	    
 	    var topVoted = null;
@@ -117,13 +129,21 @@ var vote = {
 		    td.setAttribute("class", "trCol" + a.id);
 		    tr.appendChild(td);
 		});
-		document.getElementById('tableBody').appendChild(tr);
 		
+		if (document.getElementById('tr' + val.id)) {
+		    var d = document.getElementById('tr' + val.id);
+		    document.getElementById('tableBody').replaceChild(tr,d);
+	    } else {
+		document.getElementById('tableBody').appendChild(tr);
+	    }
 		
 		var avValue = 0;
 		
 		val.stats.forEach(function(a) {
-		    var e = document.getElementById('trElem' + a.image + "/" + a.reply);
+		    var e = null;
+		    while (!e) {
+		    e = document.getElementById('trElem' + a.image + "/" + a.reply);
+		}
 		    e.textContent = a.votes;
 		    if (a.reply == 2) {
 			avValue -= parseInt(a.votes);
@@ -158,13 +178,17 @@ var vote = {
 			topHated.av = avValue;
 		    }
 		}
-	    });
+	    
+	    var topV = document.getElementById('tr' + topVoted.id).cloneNode(true);
+	    var topH = document.getElementById('tr' + topHated.id).cloneNode(true);
+	    
 	    document.getElementById("top").innerHTML = "";
 	    
 	    document.getElementById("top").
-		    appendChild(document.getElementById('tr' + topVoted.id));
+		    appendChild(topV);
 	    document.getElementById("top").
-		    appendChild(document.getElementById('tr' + topHated.id));
+		    appendChild(topH);
+		});
 	});
     }
 };

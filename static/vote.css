@@ -81,3 +81,7 @@ tr:nth-child(odd) {background-color: #FFF}
 #top img {
     height: 200px;
 }
+
+.grey {
+    color: #666;
+}
