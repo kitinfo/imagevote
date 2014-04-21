@@ -10,12 +10,15 @@
 	<meta name="robots" content="noindex,nofollow" />
 	<script type="text/javascript" src="static/ajax.js"></script>
 	<script type="text/javascript" src="static/vote.js"></script>
+	<script type="text/javascript" src="static/sort.js"></script>
     </head>
     <body onload="vote.stats();">
 	<header>
 	    <div id="title">Stats</div>
 	    <span id="status"></span>
+	    <span id="reload" class="button" onclick="vote.stats()">Reload</span>
 	    <span id="sumVotes"></span>
+	    
 	</header>
 	<span>TopVoted/TopHated</span>
 	<table>
@@ -35,7 +38,7 @@
 
 
 
-	<table>
+	<table id="theTable" class="sortable">
 	    <thead>
 		<tr id="headLine">
 		    <th>ID</th>

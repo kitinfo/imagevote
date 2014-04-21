@@ -85,3 +85,6 @@ tr:nth-child(odd) {background-color: #FFF}
 .grey {
     color: #666;
 }
+#reload {
+    float: right;
+}
