@@ -62,19 +62,52 @@ var vote = {
 	document.getElementById("status").textContent = string;
     },
     stats: function() {
+	
 	ajax.asyncGet(vote.url + "?stats", function(xhr) {
+	    
 	    var stats = JSON.parse(xhr.response).stats;
+	    
+	    var answers = JSON.parse(xhr.response).answer;
+	    
+	    var elem = document.getElementById("headLine");
+	    
+	    answers.forEach(function(val) {
+		var th = document.createElement('th');
+		th.textContent = val.name;
+		elem.appendChild(th);
+	    });
 	    
 	    stats.forEach(function(val) {
 		var tr = document.createElement('tr');
+		var imageid = val.id;
 		
 		var id = document.createElement('td');
 		id.textContent = val.id;
 		tr.appendChild(id);
 		
+		var picture = document.createElement('img');
+		picture.setAttribute('height', "50px");
+		picture.setAttribute('src', val.url);
+		picture.setAttribute('alt', val.url);
 		
+		var ptd = document.createElement('td');
+		ptd.appendChild(picture);
+		tr.appendChild(ptd);
 		
+		answers.forEach(function(a) {
+		    var td = document.createElement('td');
+		    td.setAttribute("id", "trElem" +  val.id + "/" + a.id);
+		    tr.appendChild(td);
+		});
 		document.getElementById('tableBody').appendChild(tr);
+		
+		val.stats.forEach(function(a) {
+		    var e = document.getElementById('trElem' + a.image + "/" + a.reply);
+		    if (a.votes) {
+			e.textContent = a.votes;
+		    }
+		});
+		
 	    });
 	});
     }

@@ -83,14 +83,52 @@ function stats($obj) {
     
     global $controller, $out;
     
-    $sql = "SELECT * FROM replies";
+    $sql = "SELECT images.id AS id, url, reply FROM images JOIN replies ON (replies.image = images.id) GROUP BY images.id";
     
     $stm = $controller->exec($sql, array());
     
     if ($stm !== false) {
-	$out->addStatus("replies", $stm->errorInfo());
+	
+	
+	$input = $stm->fetchall(PDO::FETCH_ASSOC);
+	
+	$output = array();
+	
+	foreach($input as $e) {
+	    
+	    $e["stats"] = getSum($e["id"]);
+	   
+	    $output[] = $e;
+	}
+	getAnswers();
+		
+	$out->addStatus("stats", $stm->errorInfo());
+	$out->add("stats", $output);
+	
 	$stm->closeCursor();
     }
+}
+
+function getSum($id) {
+    
+    global $controller, $out;
+    
+    $sql = "SELECT image, reply, COUNT(id) AS votes FROM replies WHERE image = :id GROUP BY reply, image ORDER BY image";
+    
+    $stm = $controller->exec($sql, array(
+	":id" => $id
+    ));
+    
+    $output = array();
+    if ($stm !== false) {	
+
+	$out->addStatus("sum", $stm->errorInfo());
+	$output = $stm->fetchall(PDO::FETCH_ASSOC);
+	
+	$stm->closeCursor();
+    }
+
+    return $output;
 }
 
 function get($obj) {
