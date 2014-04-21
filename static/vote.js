@@ -13,11 +13,17 @@ var vote = {
 
 	document.addEventListener("keyup", function(event) {
 	    console.log(event);
-	    if (event.keyCode == 39) {
-		vote.vote(0);
-	    }
-	    if (event.keyCode == 37) {
-		vote.vote(1);
+	    
+	    switch (event.keyCode) {
+		case 39:
+		    vote.vote(0);
+		    break;
+		case 37:
+		    vote.vote(1);
+		    break;
+		case 32:
+		    vote.getRandomImage();
+		    break;
 	    }
 	}, false);
     },

@@ -88,3 +88,6 @@ tr:nth-child(odd) {background-color: #FFF}
 #reload {
     float: right;
 }
+img {
+    max-height: 350px;
+}
