@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 var vote = {
-    url: "server/api.php",
+    url: "http://31.172.102.146/server/api.php",
     init: function() {
 	vote.getRandomImage();
 	vote.getAnswers();
@@ -62,7 +62,9 @@ var vote = {
 	document.getElementById("status").textContent = string;
     },
     stats: function() {
-	
+	ajax.asyncGet(vote.url + "?sum_votes", function(xhr) {
+	   document.getElementById("sumVotes").textContent = "Votes: " + JSON.parse(xhr.response).sum[0].votes;
+	});
 	ajax.asyncGet(vote.url + "?stats", function(xhr) {
 	    
 	    var stats = JSON.parse(xhr.response).stats;
@@ -70,16 +72,31 @@ var vote = {
 	    var answers = JSON.parse(xhr.response).answer;
 	    
 	    var elem = document.getElementById("headLine");
+	    var elem2 = document.getElementById("tHead");
 	    
 	    answers.forEach(function(val) {
 		var th = document.createElement('th');
 		th.textContent = val.name;
 		elem.appendChild(th);
+		elem2.appendChild(th);
 	    });
 	    
+	    /**
+	     * only for this
+	     */
+	    var av = document.createElement('th');
+	    av.textContent = "Durschnitt";
+	    elem.appendChild(av);
+	    elem2.appendChild(av);
+	    
+	    
+	    var topVoted = null;
+	    var topHated = null;
+	    
 	    stats.forEach(function(val) {
+		
 		var tr = document.createElement('tr');
-		var imageid = val.id;
+		tr.setAttribute("id", "tr" + val.id);
 		
 		var id = document.createElement('td');
 		id.textContent = val.id;
@@ -97,18 +114,57 @@ var vote = {
 		answers.forEach(function(a) {
 		    var td = document.createElement('td');
 		    td.setAttribute("id", "trElem" +  val.id + "/" + a.id);
+		    td.setAttribute("class", "trCol" + a.id);
 		    tr.appendChild(td);
 		});
 		document.getElementById('tableBody').appendChild(tr);
 		
+		
+		var avValue = 0;
+		
 		val.stats.forEach(function(a) {
 		    var e = document.getElementById('trElem' + a.image + "/" + a.reply);
-		    if (a.votes) {
-			e.textContent = a.votes;
+		    e.textContent = a.votes;
+		    if (a.reply == 2) {
+			avValue -= parseInt(a.votes);
+		    } else {
+			avValue += parseInt(a.votes);
 		    }
+		
 		});
 		
+		/**
+		 * only for this app
+		 */
+		var av = document.createElement("td");
+		av.textContent = avValue;
+		tr.appendChild(av);
+		
+		if (!topVoted) {
+		    topVoted = val;
+		    topVoted.av = avValue;
+		} else {
+		    if (topVoted.av < avValue) {
+			topVoted = val;
+			topVoted.av = avValue;
+		    }
+		}
+		if (!topHated) {
+		    topHated = val;
+		    topVoted.av = avValue;
+		} else {
+		    if (topHated.av > avValue) {
+			topHated = val;
+			topHated.av = avValue;
+		    }
+		}
 	    });
+	    document.getElementById("top").innerHTML = "";
+	    
+	    document.getElementById("top").
+		    appendChild(document.getElementById('tr' + topVoted.id));
+	    document.getElementById("top").
+		    appendChild(document.getElementById('tr' + topHated.id));
 	});
     }
 };

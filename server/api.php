@@ -26,6 +26,9 @@ function main() {
     if (isset($_GET["answers"])) {
 	getAnswers();
     }
+    if (isset($_GET["sum_votes"])) {
+	getSumVotes();
+    }
 
     if (isset($http_raw) && !empty($http_raw)) {
 
@@ -129,6 +132,23 @@ function getSum($id) {
     }
 
     return $output;
+}
+
+function getSumVotes() {
+    global $controller, $out;
+    
+    $sql = "SELECT COUNT(id) AS votes FROM replies";
+    
+    $stm = $controller->exec($sql);
+    
+    $output = array();
+    if ($stm !== false) {	
+
+	$out->addStatus("sum", $stm->errorInfo());
+	$out->add("sum",$stm->fetchall(PDO::FETCH_ASSOC));
+	
+	$stm->closeCursor();
+    }
 }
 
 function get($obj) {
