@@ -11,12 +11,12 @@ var vote = {
 	vote.getAnswers();
 	
 	
-	window.addEventListener("keyup", function(event) {
-	    
-	    if (event.keyIdentifier === "Right" ) {
+	document.addEventListener("keyup", function(event) {
+	    console.log(event);
+	    if (event.keyCode == 39 ) {
 		vote.vote(0);
 	    }
-	    if (event.keyIdentifier === "Left") {
+	    if (event.keyCode == 37) {
 		vote.vote(1);
 	    }
 	}, false);
