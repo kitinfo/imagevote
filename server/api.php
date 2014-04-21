@@ -86,7 +86,8 @@ function stats($obj) {
     
     global $controller, $out;
     
-    $sql = "SELECT images.id AS id, url, reply FROM images JOIN replies ON (replies.image = images.id) GROUP BY images.id";
+    $sql = "SELECT * FROM images";
+    //$sql = "SELECT images.id AS id, url, reply FROM images JOIN replies ON (replies.image = images.id) GROUP BY images.id";
     
     $stm = $controller->exec($sql, array());
     
