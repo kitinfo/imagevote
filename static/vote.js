@@ -86,6 +86,18 @@ var vote = {
 	    id.textContent = val.id;
 	    return id;
 	},
+	name: function(val) {
+	    var name = document.createElement('td');
+	    name.setAttribute('id', 'name' + val.id);
+	    var ss = val.url.substring(7, val.url.length - 4).split("_");
+	    if (ss.length < 2) {
+		name.textContent = ss[0];
+	    } else {
+	    var s = ss[1][0].toUpperCase() + ss[1].slice(1) + " " + ss[0][0].toUpperCase() + ss[0].slice(1);
+	    name.textContent = s;
+	}
+	    return name;
+	},
 	img: function(val) {
 	    var picture = document.createElement('img');
 	    picture.setAttribute('height', "50px");
@@ -134,6 +146,7 @@ var vote = {
 		    tr.setAttribute("id", "tr" + val.id);
 		    
 		    tr.appendChild(vote.columns.id(val));
+		    tr.appendChild(vote.columns.name(val));
 		    tr.appendChild(vote.columns.img(val));
 		    var up = vote.columns.up(val);
 		    tr.appendChild(up);
