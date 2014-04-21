@@ -16,10 +16,10 @@ var vote = {
 	    
 	    switch (event.keyCode) {
 		case 39:
-		    vote.vote(0);
+		    vote.vote(1);
 		    break;
 		case 37:
-		    vote.vote(1);
+		    vote.vote(2);
 		    break;
 		case 32:
 		    vote.getRandomImage();
@@ -184,10 +184,11 @@ var vote = {
 	    if (a.reply == 1) {
 		up.textContent = a.votes;
 		avValue += parseInt(a.votes);
-	    }
-	    if (a.reply == 2) {
+	    } else if (a.reply == 2) {
 		down.textContent = "-" + a.votes;
 		avValue -= parseInt(a.votes);
+	    } else {
+		console.log("Not the right reply code: " + a.reply);
 	    }
 
 	    
