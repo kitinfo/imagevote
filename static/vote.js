@@ -4,8 +4,7 @@
  * and open the template in the editor.
  */
 var vote = {
-    url: "http://vote.nsa-cloud.org/server/api.php",
-    //url:"server/api.php",
+    url:"server/api.php",
     init: function() {
 	vote.getRandomImage();
 	vote.getAnswers();
