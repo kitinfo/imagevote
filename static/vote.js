@@ -186,11 +186,7 @@ var vote = {
 	    } else if (a.reply == 2) {
 		down.textContent = "-" + a.votes;
 		avValue -= parseInt(a.votes);
-	    } else {
-		console.log("Not the right reply code: " + a.reply);
 	    }
-
-	    
 	});
 	    av.textContent = avValue;
 	    vote.checkTopVoted(val);

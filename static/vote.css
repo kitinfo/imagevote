@@ -69,7 +69,6 @@ footer {
     background-color: #AAA;
     cursor: pointer;
 }
-
 table {
    width: 100%;
    text-align: center;
@@ -90,4 +89,19 @@ tr:nth-child(odd) {background-color: #FFF}
 }
 img {
     max-height: 350px;
+}
+
+table.sortable tbody {
+    counter-reset: sortabletablescope;
+}
+table.sortable thead tr::before {
+    content: "";
+    display: table-cell;
+}
+table.sortable tbody tr::before {
+    content: counter(sortabletablescope);
+    counter-increment: sortabletablescope;
+    display: table-cell;
+    text-align: center;
+    vertical-align: inherit;
 }
